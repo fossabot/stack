@@ -15,6 +15,7 @@ RUN apk update \
         ca-certificates openssl \
  && addgroup cnb --gid ${cnb_gid} \
  && adduser  cnb -u ${cnb_uid} -D -S -s /bin/bash -G cnb \
+ && ln -s /usr/lib/jvm/default-jvm/bin/javac /usr/bin/javac \
  && java -version \
  && javac -version \
  && mvn -version
