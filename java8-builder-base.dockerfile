@@ -7,6 +7,7 @@ LABEL "io.buildpacks.stack.id"="mskj.cmbc.com.cn.java8"
 ENV CNB_USER_ID=${cnb_uid}
 ENV CNB_GROUP_ID=${cnb_gid}
 ENV PATH=$PATH:/root/.sdkman/candidates/maven/current/bin/
+ENV PATH=$PATH:/root/.sdkman/candidates/gradle/current/bin/
 RUN set -o pipefail\
     && apk add --no-cache -u zip curl \
     && addgroup cnb --gid ${cnb_gid} \
@@ -16,8 +17,9 @@ RUN set -o pipefail\
             && source /root/.sdkman/bin/sdkman-init.sh \
             && echo 'sdkman_auto_answer=true' > $SDKMAN_DIR/etc/config \
             && sdk version \
-            && sdk install maven\
+            && sdk install maven gradle\
             && sdk flush broadcast\
             && sdk flush archives\
             && sdk flush temp"\
-    && sh -c "mvn -version"
+    && sh -c "mvn -version" \
+    && sh -c "gradle -version"
